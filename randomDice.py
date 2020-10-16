@@ -1,4 +1,4 @@
-from flask import Flask, url_for , request
+from flask import Flask, url_for , request , render_template
 from markupsafe import escape
 
 app = Flask(__name__)
@@ -18,3 +18,9 @@ def login():
 
 with app.test_request_context():
     print(url_for('static', filename='style.css'))
+
+@app.route('/hello/')
+@app.route('/hello/<name>')
+def hello(name=None):
+    return render_template('hello.html', name=name)
+    
