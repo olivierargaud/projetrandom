@@ -350,8 +350,3 @@ MigrationBackup/
 .ionide/
 
 
-
-vscode/
-venv/
-__pycache__
-
