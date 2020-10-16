@@ -14,3 +14,7 @@ def login():
         return 'do_the_login() POST'
     else:
         return 'show_the_login_form() GET'
+
+
+with app.test_request_context():
+    print(url_for('static', filename='style.css'))
