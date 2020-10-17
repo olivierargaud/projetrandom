@@ -15,12 +15,19 @@
 
     <form action="/" method="POST">
 
-        <input type="number" name = "valeurMax" id="valeurMax">
+        <input type="number" min = "1" name = "valeurMax" id="valeurMax">
         <input type="submit" name = "BpValider" value="OK">
     
     </form>
 
-    <h1>{{ valeur_a_afficher }}</h1>
+    <h1>Nombre de faces du dé {{ valeur_max }}</h1>
+    <br>
+    <h1>resultat du lancé de dé {{ valeur_a_afficher }}</h1>
+
+    <form action="/lancer" method="post">
+        <input type="submit" name = "BpLancer" value="lancer">
+    </form>
+    
 
 </body>
 
