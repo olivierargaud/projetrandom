@@ -1,18 +1,24 @@
-<!DOCTYPE html>
-<html>
+{% extends 'index.html' %}
 
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Random Dice Home</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='static/style.css'>
-    
-</head>
 
-<body>
+
+{% block head %}
+   
+
+{% endblock %}
+
+
+{% block body %}
+
     <H1>Hello Random Dice</H1>
+  
+    <form action="/logout" method="POST">
 
+        <input type="submit" name = "BpLogout" value="LOGOUT">
+    
+    </form>
+
+    
     <form action="/" method="POST">
 
         <input type="number" min = "1" name = "valeurMax" id="valeurMax">
@@ -29,6 +35,5 @@
     </form>
     
 
-</body>
+{% endblock %}
 
-</html>
