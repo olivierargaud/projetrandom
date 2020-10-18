@@ -51,8 +51,7 @@ class dice_list_group(db.Model):
 
 
 class user(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String(200), nullable = False)
+    login = db.Column(db.String(200), nullable = False , primary_key = True)
     mdp = db.Column(db.String(200), nullable = False)
     date_created = db.Column(db.DateTime, default = datetime.utcnow)
 
@@ -110,8 +109,12 @@ def logout():
     else:
         return redirect('/')
 
+@app.route('/nouveauCompte')
+def nouveauCompteDeBase():
+   
+    return render_template('nouveauCompte.html')
 
-@app.route('/nouveauCompte',methods=['POST','GET'])
+@app.route('/nouveauCompte',methods=['POST'])
 def nouveauCompte():
     if request.method == 'POST':
         return render_template('nouveauCompte.html', valeur_max=valeur_max,valeur_a_afficher = valeur_a_afficher)
@@ -119,10 +122,26 @@ def nouveauCompte():
     else:
         return redirect('/')
 
-@app.route('/validerNouveauCompte',methods=['POST','GET'])
+@app.route('/validerNouveauCompte',methods=['POST'])
 def validerNouveauCompte():
-    if request.method == 'POST':
-        return render_template('home.html', valeur_max=valeur_max,valeur_a_afficher = valeur_a_afficher)
-       
-    else:
+    
+    print (request.form['login'])
+    print (request.form['mdp'])
+
+    loginSaisie = request.form['login']
+    mdpSaisie = request.form['mdp']
+
+    new_user = user(login=loginSaisie,mdp = mdpSaisie)
+
+    try:
+            db.session.add(new_user)
+            db.session.commit()
+            return render_template('home.html')
+
+    except:
         return redirect('/nouveauCompte')
+
+
+
+       
+   
