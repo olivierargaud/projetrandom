@@ -4,7 +4,7 @@ from sqlalchemy import Table, Column, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 from datetime import datetime
 import random
-
+from werkzeug.security import check_password_hash, generate_password_hash
 
 
 app = Flask(__name__)
@@ -20,7 +20,7 @@ valeur_a_afficher = 0
 
 
 class dice(db.Model):
-""" table qui definit les dés """
+    """ table qui definit les dés """
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(200), nullable = False)
     value = db.Column(db.Integer, nullable = False)
@@ -31,7 +31,7 @@ class dice(db.Model):
 
 
 class dice_group(db.Model):
-""" table qui definit les groupe de dés (lancer plusieurs dés) """
+    """ table qui definit les groupe de dés (lancer plusieurs dés) """
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(200), nullable = False)
     date_created = db.Column(db.DateTime, default = datetime.utcnow)
@@ -42,7 +42,7 @@ class dice_group(db.Model):
 
 
 class dice_list_group(db.Model):
-""" table de liaison entre les dés et les groupes de dés """
+    """ table de liaison entre les dés et les groupes de dés """
     id = db.Column(db.Integer, primary_key = True)
     idDice = db.Column(db.Integer)
     idGroup = db.Column(db.Integer, ForeignKey('dice_group.id'))
@@ -54,7 +54,7 @@ class dice_list_group(db.Model):
 
 
 class user(db.Model):
-""" table qui definit les utilisateurs """
+    """ table qui definit les utilisateurs """
     login = db.Column(db.String(200), nullable = False , primary_key = True)
     mdp = db.Column(db.String(200), nullable = False)
     date_created = db.Column(db.DateTime, default = datetime.utcnow)
@@ -135,7 +135,7 @@ def validerNouveauCompte():
     loginSaisie = request.form['login']
     mdpSaisie = request.form['mdp']
 
-    new_user = user(login=loginSaisie,mdp = mdpSaisie)
+    new_user = user(login=loginSaisie,mdp = generate_password_hash(mdpSaisie))
 
     try:
             db.session.add(new_user)
